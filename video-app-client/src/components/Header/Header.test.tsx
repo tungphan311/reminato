@@ -3,15 +3,17 @@ import Header from './Header'
 
 describe('Header', () => {
   it('should render the title', () => {
-    const mockFn = jest.fn()
-    render(<Header handleLogin={mockFn} />)
+    const mockLogin = jest.fn()
+    const mockLogout = jest.fn()
+    render(<Header handleLogin={mockLogin} handleLogout={mockLogout} />)
     const titleElement = screen.getByText(/Funny Movies/i)
     expect(titleElement).toBeInTheDocument()
   })
 
   it('should render the logo', () => {
-    const mockFn = jest.fn()
-    render(<Header handleLogin={mockFn} />)
+    const mockLogin = jest.fn()
+    const mockLogout = jest.fn()
+    render(<Header handleLogin={mockLogin} handleLogout={mockLogout} />)
 
     const logoElement = screen.getByRole('img')
     expect(logoElement).toHaveAttribute('src', '/assets/home-icon.svg')
@@ -21,8 +23,9 @@ describe('Header', () => {
   })
 
   it('should render email input and password input and allow user fill in', () => {
-    const mockFn = jest.fn()
-    render(<Header handleLogin={mockFn} />)
+    const mockLogin = jest.fn()
+    const mockLogout = jest.fn()
+    render(<Header handleLogin={mockLogin} handleLogout={mockLogout} />)
 
     const emailInput = screen.getByTestId('email')
     const passwordInput = screen.getByTestId('password')
@@ -35,8 +38,9 @@ describe('Header', () => {
   })
 
   it('submits the form with email and password when the button is clicked', async () => {
-    const mockFn = jest.fn()
-    render(<Header handleLogin={mockFn} />)
+    const mockLogin = jest.fn()
+    const mockLogout = jest.fn()
+    render(<Header handleLogin={mockLogin} handleLogout={mockLogout} />)
 
     const emailInput = screen.getByTestId('email')
     const passwordInput = screen.getByTestId('password')
@@ -50,7 +54,7 @@ describe('Header', () => {
     console.log(submitBtn)
 
     await waitFor(() =>
-      expect(mockFn).toHaveBeenCalledWith({
+      expect(mockLogin).toHaveBeenCalledWith({
         email: 'test@gmail.com',
         password: 'testpassword',
       }),

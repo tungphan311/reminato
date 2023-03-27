@@ -1,32 +1,15 @@
-import { useState } from 'react'
 import { UserLogin } from '../../types'
+import LoginForm from '../LoginForm/LoginForm'
+import UserSection from '../UserSection/UserSection'
 import './Header.css'
 
 type HeaderProps = {
   handleLogin: (user: UserLogin) => void
+  loggedEmail?: string
+  handleLogout: () => void
 }
 
-function Header({ handleLogin }: HeaderProps) {
-  const [user, setUser] = useState<UserLogin>({
-    email: '',
-    password: '',
-  })
-
-  const { email, password } = user
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-
-    handleLogin(user)
-  }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    const key = e.target.name
-
-    setUser((preUser) => ({ ...preUser, [key]: value }))
-  }
-
+function Header({ handleLogin, loggedEmail, handleLogout }: HeaderProps) {
   return (
     <div className='border-bottom p-3'>
       <div className='container'>
@@ -36,39 +19,11 @@ function Header({ handleLogin }: HeaderProps) {
             <span className='app--name'>Funny Movies</span>
           </div>
 
-          <form
-            id='loginForm'
-            className='col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex'
-            onSubmit={handleSubmit}
-          >
-            <input
-              className='form-control me-3'
-              placeholder='email'
-              aria-label='email'
-              name='email'
-              value={email}
-              onChange={handleInputChange}
-              data-testid='email'
-            />
-            <input
-              type='password'
-              className='form-control'
-              placeholder='password'
-              aria-label='password'
-              name='password'
-              value={password}
-              onChange={handleInputChange}
-              data-testid='password'
-            />
-          </form>
-          <button
-            type='submit'
-            form='loginForm'
-            className='btn btn-primary'
-            data-testid='submitBtn'
-          >
-            Login / Register
-          </button>
+          {!loggedEmail ? (
+            <LoginForm handleLogin={handleLogin} />
+          ) : (
+            <UserSection loggedEmail={loggedEmail} handleLogout={handleLogout} />
+          )}
         </div>
       </div>
     </div>

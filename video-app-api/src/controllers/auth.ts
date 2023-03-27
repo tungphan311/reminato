@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
-import { NextFunction, Request, RequestHandler, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
-import { AuthBody, AuthResponse } from "../interfaces/auth";
+import { AuthBody } from "../interfaces/auth";
 import UserModel from "../models/User";
 
 const getAuthenticatedUser = async (
@@ -17,7 +17,9 @@ const getAuthenticatedUser = async (
     }
 
     const user = await UserModel.findById(authenticatedUser).exec();
-    res.status(200).json(user);
+    res.status(200).json({
+      email: user?.email,
+    });
   } catch (error) {
     next(error);
   }

@@ -1,9 +1,12 @@
+import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import Header from './components/Header/Header'
+import Layout from './layouts/Layout'
+import Home from './pages/Home'
+import Share from './pages/Share'
 import { UserLogin } from './types'
 import axios from './utils/axios'
-import Cookies from 'js-cookie'
 
 function App() {
   const [email, setEmail] = useState<string>('')
@@ -39,9 +42,16 @@ function App() {
   }
 
   return (
-    <div className='App'>
-      <Header handleLogin={handleLogin} loggedEmail={email} handleLogout={handleLogout} />
-    </div>
+    <Routes>
+      <Route
+        element={
+          <Layout handleLogin={handleLogin} loggedEmail={email} handleLogout={handleLogout} />
+        }
+      >
+        <Route path='/' element={<Home />} />
+        <Route path='/share' element={<Share />} />
+      </Route>
+    </Routes>
   )
 }
 

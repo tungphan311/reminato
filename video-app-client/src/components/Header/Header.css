@@ -1,0 +1,11 @@
+.app--name {
+  font-size: 28px;
+  font-weight: 700;
+  margin-left: 8px;
+}
+
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}

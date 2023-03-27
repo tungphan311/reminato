@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom'
+import { ROUTES } from '../../constants'
+
 type UserSectionProps = {
   loggedEmail: string
   handleLogout: () => void
@@ -8,9 +11,11 @@ function UserSection({ loggedEmail, handleLogout }: UserSectionProps) {
     <>
       <span>Welcome {loggedEmail}</span>
 
-      <button className='btn btn-success ms-3' data-testid='shareBtn'>
-        Share a video
-      </button>
+      <Link to={ROUTES.SHARE}>
+        <button className='btn btn-success ms-3' data-testid='shareBtn'>
+          Share a video
+        </button>
+      </Link>
 
       <button className='btn btn-light ms-3' data-testid='submitBtn' onClick={handleLogout}>
         Logout

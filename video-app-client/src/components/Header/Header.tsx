@@ -2,6 +2,8 @@ import { UserLogin } from '../../types'
 import LoginForm from '../LoginForm/LoginForm'
 import UserSection from '../UserSection/UserSection'
 import './Header.css'
+import { Link } from 'react-router-dom'
+import { ROUTES } from '../../constants'
 
 type HeaderProps = {
   handleLogin: (user: UserLogin) => void
@@ -14,10 +16,10 @@ function Header({ handleLogin, loggedEmail, handleLogout }: HeaderProps) {
     <div className='border-bottom p-3'>
       <div className='container'>
         <div className='d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start'>
-          <div className='logo-wrapper'>
+          <Link to={ROUTES.HOME} className='logo-wrapper'>
             <img src='/assets/home-icon.svg' alt='home icon' width={24} height={24} />
             <span className='app--name'>Funny Movies</span>
-          </div>
+          </Link>
 
           {!loggedEmail ? (
             <LoginForm handleLogin={handleLogin} />

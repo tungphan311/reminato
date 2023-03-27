@@ -5,7 +5,9 @@
 }
 
 .logo-wrapper {
+  text-decoration: none;
   display: flex;
   align-items: center;
   margin-right: auto;
+  color: #333;
 }

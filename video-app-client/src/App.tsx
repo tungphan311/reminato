@@ -2,6 +2,7 @@ import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
+import { ROUTES } from './constants'
 import Layout from './layouts/Layout'
 import Home from './pages/Home'
 import Share from './pages/Share'
@@ -48,8 +49,8 @@ function App() {
           <Layout handleLogin={handleLogin} loggedEmail={email} handleLogout={handleLogout} />
         }
       >
-        <Route path='/' element={<Home />} />
-        <Route path='/share' element={<Share />} />
+        <Route path={ROUTES.HOME} element={<Home />} />
+        <Route path={ROUTES.SHARE} element={<Share />} />
       </Route>
     </Routes>
   )

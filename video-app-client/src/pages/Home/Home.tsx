@@ -27,6 +27,7 @@ function Home({ loggedEmail }: HomeProps) {
       fetchVideos()
     }
   }, [loggedEmail])
+
   return (
     <div className='videos-wrapper'>
       {videos.map((video) => (

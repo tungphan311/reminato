@@ -9,8 +9,12 @@ function VideoCard({ thumbnail, title, description }: Video) {
         </div>
         <div className='col-md-8'>
           <div className='card-body'>
-            <h5 className='card-title'>{title}</h5>
-            <p className='card-text'>{description}</p>
+            <h5 className='card-title' data-testid='title'>
+              {title}
+            </h5>
+            <p className='card-text' data-testid='description'>
+              {description}
+            </p>
           </div>
         </div>
       </div>

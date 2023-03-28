@@ -17,7 +17,7 @@ function UserSection({ loggedEmail, handleLogout }: UserSectionProps) {
         </button>
       </Link>
 
-      <button className='btn btn-light ms-3' data-testid='submitBtn' onClick={handleLogout}>
+      <button className='btn btn-light ms-3' data-testid='logoutBtn' onClick={handleLogout}>
         Logout
       </button>
     </>

@@ -7,7 +7,7 @@ import Layout from './layouts/Layout'
 import Home from './pages/Home/Home'
 import Share from './pages/Share/Share'
 import { UserLogin } from './types'
-import axios from './utils/axios'
+import * as AuthServices from './services/auth'
 
 function App() {
   const [email, setEmail] = useState<string>('')
@@ -22,7 +22,7 @@ function App() {
 
   const handleLogin = async (user: UserLogin) => {
     try {
-      const result = await axios.post('/auth', user)
+      const result = await AuthServices.login(user)
       setEmail(result.data.email)
       Cookies.set('email', result.data.email, {
         expires: 1,
@@ -34,7 +34,7 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      await axios.post('/auth/logout')
+      await AuthServices.logout()
       setEmail('')
       Cookies.remove('email')
     } catch (error) {

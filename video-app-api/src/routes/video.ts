@@ -5,5 +5,6 @@ import { validVideoUrl } from "../middlewares/video";
 const router: Router = Router();
 
 router.post("/", validVideoUrl, VideoController.saveVideo);
+router.get("/", VideoController.getVideos);
 
 export default router;

@@ -36,4 +36,18 @@ const saveVideo = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { saveVideo };
+const getVideos = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.session.userId;
+
+    const videos = await VideoModel.find({ userId }).exec();
+
+    res.status(200).json({
+      videos,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { saveVideo, getVideos };

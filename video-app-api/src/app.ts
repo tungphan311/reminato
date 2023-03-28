@@ -7,6 +7,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import createHttpError, { isHttpError } from "http-errors";
 import path from "path";
+import { requiresAuth } from "./middlewares/user";
 
 dotenv.config();
 
@@ -42,7 +43,7 @@ app.use(
 );
 
 app.use("/api/auth", authRouter);
-app.use("/api/video", videoRouter);
+app.use("/api/video", requiresAuth, videoRouter);
 
 app.get("*", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "../../video-app-client/build/index.html"));

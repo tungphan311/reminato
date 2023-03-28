@@ -1,6 +1,7 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import * as yup from "yup";
-import { ERR_MSG_INVALID_USER } from "../constants";
+import { ERR_MSG_INVALID_USER, ERR_MSG_UNAUTHENTICATED } from "../constants";
+import createHttpError from "http-errors";
 
 const userSchema = yup.object().shape({
   email: yup.string().email().required(),
@@ -21,4 +22,16 @@ const validateUser = async (
   }
 };
 
-export default validateUser;
+const requiresAuth: RequestHandler = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.session.userId) {
+    next();
+  } else {
+    next(createHttpError(401, ERR_MSG_UNAUTHENTICATED));
+  }
+};
+
+export { validateUser, requiresAuth };

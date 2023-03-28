@@ -14,7 +14,7 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT;
 
-app.use(cors({ credentials: true, origin: process.env.ORIGINS?.split(",") }));
+app.use(cors({ credentials: true, origin: process.env.ORIGINS }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

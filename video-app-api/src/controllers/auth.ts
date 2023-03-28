@@ -63,7 +63,6 @@ const authentication = async (
         throw createHttpError(401, ERR_MSG_INVALID_USER);
       }
 
-      console.log("id: ", existingUser?._id);
       req.session.userId = existingUser?._id;
 
       res.status(200).json({
@@ -73,8 +72,6 @@ const authentication = async (
   } catch (error) {
     next(error);
   }
-
-  console.log(req.session);
 };
 
 const logout = async (req: Request, res: Response, next: NextFunction) => {

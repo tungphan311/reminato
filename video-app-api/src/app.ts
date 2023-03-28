@@ -2,9 +2,11 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express, Request, Response, NextFunction } from "express";
 import authRouter from "./routes/auth";
+import videoRouter from "./routes/video";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import createHttpError, { isHttpError } from "http-errors";
+import path from "path";
 
 dotenv.config();
 
@@ -30,15 +32,21 @@ app.use(
   })
 );
 
-// app.get("/", (req: Request, res: Response) => {
-//   res.send("Express + TypeScript Server");
-// });
-
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
 
+app.use(
+  "/",
+  express.static(path.join(__dirname, "../../video-app-client/build"))
+);
+
 app.use("/api/auth", authRouter);
+app.use("/api/video", videoRouter);
+
+app.get("*", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "../../video-app-client/build/index.html"));
+});
 
 app.use((_, __, next: NextFunction) => {
   next(createHttpError(400, "Endpoint not found"));

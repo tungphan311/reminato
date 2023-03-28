@@ -16,7 +16,7 @@ const saveVideo = async (req: Request, res: Response, next: NextFunction) => {
       throw createHttpError(400, ERR_MSG_SHARED_VIDEO);
     }
 
-    const video = await getVideoDetail("FNYRb_c-WYQ");
+    const video = await getVideoDetail(videoId);
 
     if (!video) {
       throw createHttpError(400, ERR_MSG_INVALID_VIDEO_URL);

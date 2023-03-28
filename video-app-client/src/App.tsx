@@ -8,9 +8,11 @@ import Home from './pages/Home/Home'
 import Share from './pages/Share/Share'
 import { UserLogin } from './types'
 import * as AuthServices from './services/auth'
+import useToggle from './hooks/useToggle'
 
 function App() {
   const [email, setEmail] = useState<string>('')
+  const [isLoading, toggle] = useToggle(false)
 
   useEffect(() => {
     const loggedEmail = Cookies.get('email')
@@ -46,11 +48,16 @@ function App() {
     <Routes>
       <Route
         element={
-          <Layout handleLogin={handleLogin} loggedEmail={email} handleLogout={handleLogout} />
+          <Layout
+            handleLogin={handleLogin}
+            loggedEmail={email}
+            handleLogout={handleLogout}
+            isLoading={isLoading}
+          />
         }
       >
         <Route path={ROUTES.HOME} element={<Home />} />
-        <Route path={ROUTES.SHARE} element={<Share />} />
+        <Route path={ROUTES.SHARE} element={<Share toggleLoading={toggle} />} />
       </Route>
     </Routes>
   )

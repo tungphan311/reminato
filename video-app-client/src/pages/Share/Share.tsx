@@ -4,7 +4,11 @@ import * as VideoServices from '../../services/video'
 import { toast } from 'react-toastify'
 import { getErrorMessage } from '../../utils/error'
 
-function Share() {
+type ShareProps = {
+  toggleLoading: () => void
+}
+
+function Share({ toggleLoading }: ShareProps) {
   const [url, setUrl] = useState<string>('')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,12 +19,19 @@ function Share() {
     e.preventDefault()
 
     try {
+      toggleLoading()
       await VideoServices.shareVideo({ videoUrl: url })
+      toast('Shared video successfully', {
+        type: 'success',
+      })
+      setUrl('')
     } catch (error: any) {
       toast(getErrorMessage(error), {
         type: 'error',
       })
     }
+
+    toggleLoading()
   }
 
   return (

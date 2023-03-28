@@ -12,7 +12,11 @@ function Layout({ handleLogin, loggedEmail, handleLogout }: LayoutProps) {
   return (
     <>
       <Header handleLogin={handleLogin} loggedEmail={loggedEmail} handleLogout={handleLogout} />
-      <Outlet />
+      <main>
+        <div className='container'>
+          <Outlet />
+        </div>
+      </main>
     </>
   )
 }

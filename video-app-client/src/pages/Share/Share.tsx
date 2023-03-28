@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import './Share.css'
-import * as VideoServices from '../../services/video'
 import { toast } from 'react-toastify'
-import { getErrorMessage, toastErr } from '../../utils/error'
+import * as VideoServices from '../../services/video'
+import { toastErr } from '../../utils/error'
+import './Share.css'
 
 type ShareProps = {
   toggleLoading: () => void
@@ -25,7 +25,7 @@ function Share({ toggleLoading }: ShareProps) {
         type: 'success',
       })
       setUrl('')
-    } catch (error: any) {
+    } catch (error) {
       toastErr(error)
     }
 

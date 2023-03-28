@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import createHttpError from "http-errors";
-import { AuthBody } from "../interfaces/auth";
+import { AuthBody, AuthResponse } from "../interfaces/auth";
 import UserModel from "../models/User";
 
 const getAuthenticatedUser = async (

@@ -5,4 +5,6 @@ const baseUrl = '/video'
 
 const shareVideo = async (video: ShareVideo) => axios.post(baseUrl, video)
 
-export { shareVideo }
+const getVideos = async () => axios.get(baseUrl)
+
+export { shareVideo, getVideos }

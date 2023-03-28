@@ -9,6 +9,7 @@ import Share from './pages/Share/Share'
 import { UserLogin } from './types'
 import * as AuthServices from './services/auth'
 import useToggle from './hooks/useToggle'
+import { toastErr } from './utils/error'
 
 function App() {
   const [email, setEmail] = useState<string>('')
@@ -30,7 +31,7 @@ function App() {
         expires: 1,
       })
     } catch (error) {
-      console.log(error)
+      toastErr(error)
     }
   }
 
@@ -40,7 +41,7 @@ function App() {
       setEmail('')
       Cookies.remove('email')
     } catch (error) {
-      console.log(error)
+      toastErr(error)
     }
   }
 
@@ -56,7 +57,7 @@ function App() {
           />
         }
       >
-        <Route path={ROUTES.HOME} element={<Home />} />
+        <Route path={ROUTES.HOME} element={<Home loggedEmail={email} />} />
         <Route path={ROUTES.SHARE} element={<Share toggleLoading={toggle} />} />
       </Route>
     </Routes>

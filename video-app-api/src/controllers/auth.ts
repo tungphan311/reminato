@@ -1,8 +1,12 @@
 import bcrypt from "bcrypt";
-import { NextFunction, Request, RequestHandler, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
-import { AuthBody, AuthResponse } from "../interfaces/auth";
+import { AuthBody } from "../interfaces/auth";
 import UserModel from "../models/User";
+import {
+  ERR_MSG_INVALID_USER,
+  ERR_MSG_UNAUTHENTICATED,
+} from "./../constants/messages";
 
 const getAuthenticatedUser = async (
   req: Request,
@@ -13,7 +17,7 @@ const getAuthenticatedUser = async (
 
   try {
     if (!authenticatedUser) {
-      throw createHttpError(401, "User is not authenticated");
+      throw createHttpError(401, ERR_MSG_UNAUTHENTICATED);
     }
 
     const user = await UserModel.findById(authenticatedUser).exec();
@@ -49,23 +53,28 @@ const authentication = async (
       res.status(201).json({
         email: newUser.email as string,
       });
-    }
+    } else {
+      const isPasswordMatch = await bcrypt.compare(
+        password,
+        existingUser?.password as string
+      );
 
-    const isPasswordMatch = await bcrypt.compare(
-      password,
-      existingUser?.password as string
-    );
+      if (!isPasswordMatch) {
+        throw createHttpError(401, ERR_MSG_INVALID_USER);
+      }
 
-    if (!isPasswordMatch) {
-      throw createHttpError(401, "Invalid email or password");
+      console.log("id: ", existingUser?._id);
+      req.session.userId = existingUser?._id;
+
+      res.status(200).json({
+        email: existingUser?.email as string,
+      });
     }
-    res.status(200).json({
-      email: existingUser?.email as string,
-    });
   } catch (error) {
-    console.log(error);
     next(error);
   }
+
+  console.log(req.session);
 };
 
 const logout = async (req: Request, res: Response, next: NextFunction) => {

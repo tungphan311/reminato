@@ -27,6 +27,7 @@ const requiresAuth: RequestHandler = (
   res: Response,
   next: NextFunction
 ) => {
+  console.log(req.session);
   if (req.session.userId) {
     next();
   } else {

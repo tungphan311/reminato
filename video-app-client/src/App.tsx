@@ -25,6 +25,7 @@ function App() {
 
   const handleLogin = async (user: UserLogin) => {
     try {
+      toggle()
       const result = await AuthServices.login(user)
       setEmail(result.data.email)
       Cookies.set('email', result.data.email, {
@@ -33,6 +34,8 @@ function App() {
     } catch (error) {
       toastErr(error)
     }
+
+    toggle()
   }
 
   const handleLogout = async () => {

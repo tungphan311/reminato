@@ -25,6 +25,8 @@ function Home({ loggedEmail }: HomeProps) {
 
     if (loggedEmail) {
       fetchVideos()
+    } else {
+      setVideos([])
     }
   }, [loggedEmail])
 
